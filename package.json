@@ -1,0 +1,27 @@
+{
+  "name": "invoices-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/didacesteban/invoices-node-svelte.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/didacesteban/invoices-node-svelte/issues"
+  },
+  "homepage": "https://github.com/didacesteban/invoices-node-svelte#readme",
+  "dependencies": {
+    "bp": "^0.1.1-beta",
+    "cors": "^2.8.5",
+    "csvtojson": "^2.0.10",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "puppeteer": "^21.1.0"
+  }
+}
