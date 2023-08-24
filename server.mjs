@@ -5,18 +5,11 @@ import cors from "cors";
 import fs from "fs";
 import puppeteer from "puppeteer";
 import csvtojson from "csvtojson";
-import nodemailer from "nodemailer";
-import { readFile } from "fs/promises";
-import pdfLib from "pdf-lib";
-
-const invoicesJSON = JSON.parse(
-  await readFile(new URL("./invoices_db.json", import.meta.url))
-);
 
 const { urlencoded, json } = bp;
 
 const invoices = {
-  invoices: invoicesJSON ? [...invoicesJSON] : [],
+  invoices: [],
 };
 
 const app = express();

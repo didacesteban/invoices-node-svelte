@@ -69,10 +69,6 @@
         console.error("Error:", error.message);
       });
   };
-
-  onMount(() => {
-    // fetchData();
-  });
 </script>
 
 <svelte:head>
