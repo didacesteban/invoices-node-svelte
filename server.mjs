@@ -5,6 +5,7 @@ import cors from "cors";
 import fs from "fs";
 import puppeteer from "puppeteer";
 import csvtojson from "csvtojson";
+import multer from "multer";
 
 const { urlencoded, json } = bp;
 
@@ -114,14 +115,49 @@ app.get("/invoice/:id", (req, res) => {
 //   });
 // });
 
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+app.post("/invoices/upload", upload.single("csvFile"), (req, res) => {
+  const csvData = req.file.buffer.toString();
+  const jsonData = [];
+
+  csvtojson({ noheader: true })
+    .fromString(csvData)
+    .then((jsonArray) => {
+      const newArray = jsonArray.map((obj) => {
+        return {
+          date: obj.field1,
+          id: obj.field2,
+          name: obj.field3,
+          dni: obj.field4,
+          description: obj.field5,
+          base: obj.field6,
+          iva: obj.field7,
+          irpf: obj.field8,
+          total: obj.field9,
+        };
+      });
+      res.json(newArray);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
+});
+
 app.post("/invoice/download", (req, res) => {
-  const { invoice } = req.body;
+  const { invoice, admin } = req.body;
   fs.readFile("invoice_template.html", "utf8", function (err, data) {
     if (err) {
       res.json({ data: "fail" });
     }
 
     const newInvoice = data
+      .replace("{adminName}", admin.name)
+      .replace("{adminNif}", admin.nif)
+      .replace("{adminAdress}", admin.adress)
+      .replace("{adminPhone}", admin.phone)
+      .replace("{adminEmail}", admin.email)
       .replaceAll("{date}", invoice.date)
       .replace("{id}", invoice.id)
       .replace("{name}", invoice.name)

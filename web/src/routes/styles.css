@@ -11,6 +11,10 @@ body {
 	@apply px-4 py-1.5 rounded-md shadow-lg bg-gradient-to-r from-pink-600 to-red-600 font-medium text-gray-100 hover:to-pink-600 hover:drop-shadow-md
 }
 
+.input {
+  @apply border-2 border-gray-300 rounded-lg p-2 w-full;
+}
+
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
