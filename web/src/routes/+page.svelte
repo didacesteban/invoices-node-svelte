@@ -22,7 +22,7 @@
   const downloadInvoice = async function downloadPDF(invoice) {
     try {
       const response = await axios.post(
-        "http://localhost:3000/invoice/download",
+        "https://invoices-node-svelte-production.up.railway.app/invoice/download",
         { invoice, admin },
         {
           responseType: "arraybuffer", // To get binary data as ArrayBuffer
@@ -57,10 +57,13 @@
     const formData = new FormData();
     formData.append("csvFile", selectedFile);
 
-    const response = await fetch("http://localhost:3000/invoices/upload", {
-      method: "POST",
-      body: formData,
-    });
+    const response = await fetch(
+      "https://invoices-node-svelte-production.up.railway.app/invoices/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
     data = await response.json();
   }

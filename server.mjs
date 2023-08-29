@@ -46,77 +46,6 @@ app.get("/invoice/:id", (req, res) => {
   res.json({ ...selectedInvoice });
 });
 
-// app.post("/invoice/download", (req, res) => {
-//   const { invoice } = req.body;
-//   fs.readFile("invoice_template.html", "utf8", function (err, data) {
-//     if (err) {
-//       res.json({ data: "fail" });
-//     }
-
-//     const newInvoice = data
-//       .replaceAll("{date}", invoice.date)
-//       .replace("{id}", invoice.id)
-//       .replace("{name}", invoice.name)
-//       .replace("{dni}", invoice.dni)
-//       .replace("{description}", invoice.description)
-//       .replace("{base}", invoice.base)
-//       .replace("{iva}", invoice.iva)
-//       .replace("{irpf}", invoice.irpf)
-//       .replaceAll("{total}", invoice.total);
-
-//     (async () => {
-//       try {
-//         // Create a new browser instance
-//         const browser = await puppeteer.launch();
-
-//         // Create a new page
-//         const page = await browser.newPage();
-
-//         // Define your local HTML content (replace this with your actual HTML)
-//         const localHtml = newInvoice;
-
-//         // Set the HTML content for the page
-//         await page.setContent(localHtml, { waitUntil: "networkidle0" });
-
-//         // Generate PDF from the page
-//         const pdfBuffer = await page.pdf({ format: "A4" });
-
-//         // Close the browser
-//         await browser.close();
-
-//         // Set up nodemailer
-//         const transporter = nodemailer.createTransport({
-//           service: "Gmail", // Update with your email service
-//           auth: {
-//             user: "didacesteban@gmail.com",
-//             pass: "fswgzsxglxtpnowb",
-//           },
-//         });
-
-//         const mailOptions = {
-//           from: "didacesteban@gmail.com",
-//           to: "valenreyes.nutricion@gmail.com",
-//           subject: "Te puedo mandar una factura desde la aplicacion a tu mail?",
-//           text: "Estoy probando si te puedo mandar una factura a tu email jajaja",
-//           attachments: [
-//             {
-//               filename: `factura_${invoice.id}.pdf`,
-//               content: pdfBuffer,
-//             },
-//           ],
-//         };
-
-//         // Send the email
-//         const info = await transporter.sendMail(mailOptions);
-//         console.log("Email sent:", info.response);
-//       } catch (error) {
-//         console.error("Error:", error);
-//       }
-//       res.json({ data: "email sent" });
-//     })();
-//   });
-// });
-
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -169,6 +98,13 @@ app.post("/invoice/download", (req, res) => {
       .replace("{iva}", invoice.iva)
       .replace("{irpf}", invoice.irpf)
       .replaceAll("{total}", invoice.total);
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="{factura_${invoice.id}.pdf"`
+    );
+    return res.send(newInvoice);
 
     (async () => {
       try {
