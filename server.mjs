@@ -9,6 +9,8 @@ import multer from "multer";
 
 const { urlencoded, json } = bp;
 
+const PORT = process.env.PORT || 3000;
+
 const invoices = {
   invoices: [],
 };
@@ -147,7 +149,7 @@ app.post("/invoices/upload", upload.single("csvFile"), (req, res) => {
 
 app.post("/invoice/download", (req, res) => {
   const { invoice, admin } = req.body;
-  fs.readFile("invoice_template.html", "utf8", function (err, data) {
+  fs.readFile("invoice_template_watermark.html", "utf8", function (err, data) {
     if (err) {
       res.json({ data: "fail" });
     }
@@ -233,6 +235,6 @@ app.post("/invoice/csvtojson", (req, res) => {
     });
 });
 
-app.listen(3000, () => {
-  console.log("Server on http://localhost:3000");
+app.listen(PORT, () => {
+  console.log("Server on port:", PORT);
 });
