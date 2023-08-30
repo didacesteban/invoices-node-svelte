@@ -99,17 +99,10 @@ app.post("/invoice/download", (req, res) => {
       .replace("{irpf}", invoice.irpf)
       .replaceAll("{total}", invoice.total);
 
-    res.setHeader("Content-Type", "application/pdf");
-    res.setHeader(
-      "Content-Disposition",
-      `attachment; filename="{factura_${invoice.id}.pdf"`
-    );
-    return res.send(newInvoice);
-
     (async () => {
       try {
         // Create a new browser instance
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({ headless: false });
 
         // Create a new page
         const page = await browser.newPage();
