@@ -6,9 +6,8 @@ import fs from "fs";
 import puppeteer from "puppeteer";
 import csvtojson from "csvtojson";
 import multer from "multer";
-import path from "path";
-import pdf from "pdf-creator-node";
-import phantom from "phantomjs-prebuilt";
+import PDFDocument from "pdfkit";
+import blobStream from "blob-stream";
 
 const { urlencoded, json } = bp;
 
@@ -103,44 +102,32 @@ app.post("/invoice/download", (req, res) => {
       .replaceAll("{total}", invoice.total);
 
     try {
-      // Create a PDF document
-      const options = {
-        format: "A4",
-        orientation: "portrait",
-        border: "10mm",
-        header: {
-          height: "10mm",
-          contents: '<div style="text-align: center;">PDF Header</div>',
-        },
-        footer: {
-          height: "10mm",
-          contents: {
-            first: "Page 1",
-            2: "Page 2",
-            default:
-              '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>',
-          },
-        },
-      };
+      // Create a new PDF document
+      const doc = new PDFDocument();
 
-      const document = {
-        html: htmlContent,
-        // path: path.join(__dirname, "output.pdf"), // Output path for the generated PDF
-        data: {},
-        type: "buffer", // Output type is buffer,
-        phantomPath: phantom.path,
-      };
+      // Set document properties (optional)
+      doc.info.Title = "Generated PDF";
+      doc.info.Author = "Your Name";
+      doc.info.Subject = "Sample PDF";
+      doc.info.Keywords = "PDFKit, Express.js";
 
-      pdf
-        .create(document, options)
-        .then((buffer) => {
-          res.setHeader("Content-Type", "application/pdf");
-          res.send(buffer);
-        })
-        .catch((error) => {
-          console.error("Error generating PDF:", error);
-          res.status(500).send("Error generating PDF");
-        });
+      // Create a buffer to store the PDF
+      const buffers = [];
+      doc.on("data", (chunk) => buffers.push(chunk));
+      doc.on("end", () => {
+        const pdfBuffer = Buffer.concat(buffers);
+
+        // Set the appropriate response headers and send the PDF
+        res.setHeader("Content-Type", "application/pdf");
+        res.setHeader("Content-Disposition", "inline; filename=generated.pdf");
+        res.send(pdfBuffer);
+      });
+
+      // Write the HTML content to the PDF
+      doc.text(htmlContent);
+
+      // End the document to finalize the PDF
+      doc.end();
     } catch (error) {
       console.error("Error generating PDF:", error);
       res.status(500).send("Error generating PDF");
