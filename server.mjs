@@ -8,6 +8,7 @@ import csvtojson from "csvtojson";
 import multer from "multer";
 import path from "path";
 import pdf from "pdf-creator-node";
+import phantom from "phantomjs-prebuilt";
 
 const { urlencoded, json } = bp;
 
@@ -126,7 +127,8 @@ app.post("/invoice/download", (req, res) => {
         html: htmlContent,
         // path: path.join(__dirname, "output.pdf"), // Output path for the generated PDF
         data: {},
-        type: "buffer", // Output type is buffer
+        type: "buffer", // Output type is buffer,
+        phantomPath: phantom.path,
       };
 
       pdf
