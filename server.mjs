@@ -6,6 +6,8 @@ import fs from "fs";
 import puppeteer from "puppeteer";
 import csvtojson from "csvtojson";
 import multer from "multer";
+import path from "path";
+import pdf from "pdf-creator-node";
 
 const { urlencoded, json } = bp;
 
@@ -83,7 +85,7 @@ app.post("/invoice/download", (req, res) => {
       res.json({ data: "fail" });
     }
 
-    const newInvoice = data
+    const htmlContent = data
       .replace("{adminName}", admin.name)
       .replace("{adminNif}", admin.nif)
       .replace("{adminAdress}", admin.adress)
@@ -99,39 +101,82 @@ app.post("/invoice/download", (req, res) => {
       .replace("{irpf}", invoice.irpf)
       .replaceAll("{total}", invoice.total);
 
-    (async () => {
-      try {
-        // Create a new browser instance
-        const browser = await puppeteer.launch({
-          headless: false,
-          args: ["--headless"],
+    try {
+      // Create a PDF document
+      const options = {
+        format: "A4",
+        orientation: "portrait",
+        border: "10mm",
+        header: {
+          height: "10mm",
+          contents: '<div style="text-align: center;">PDF Header</div>',
+        },
+        footer: {
+          height: "10mm",
+          contents: {
+            first: "Page 1",
+            2: "Page 2",
+            default:
+              '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>',
+          },
+        },
+      };
+
+      const document = {
+        html: htmlContent,
+        // path: path.join(__dirname, "output.pdf"), // Output path for the generated PDF
+        data: {},
+        type: "buffer", // Output type is buffer
+      };
+
+      pdf
+        .create(document, options)
+        .then((buffer) => {
+          res.setHeader("Content-Type", "application/pdf");
+          res.send(buffer);
+        })
+        .catch((error) => {
+          console.error("Error generating PDF:", error);
+          res.status(500).send("Error generating PDF");
         });
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      res.status(500).send("Error generating PDF");
+    }
 
-        // Create a new page
-        const page = await browser.newPage();
+    // (async () => {
+    //   try {
+    //     // Create a new browser instance
+    //     const browser = await puppeteer.launch({
+    //       headless: false,
+    //       args: ["--headless"],
+    //     });
 
-        // Define your local HTML content (replace this with your actual HTML)
-        const localHtml = newInvoice;
+    //     // Create a new page
+    //     const page = await browser.newPage();
 
-        // Set the HTML content for the page
-        await page.setContent(localHtml, { waitUntil: "networkidle0" });
+    //     // Define your local HTML content (replace this with your actual HTML)
+    //     const localHtml = newInvoice;
 
-        // Generate PDF from the page
-        const pdfBuffer = await page.pdf({ format: "A4" });
+    //     // Set the HTML content for the page
+    //     await page.setContent(localHtml, { waitUntil: "networkidle0" });
 
-        // Close the browser
-        await browser.close();
+    //     // Generate PDF from the page
+    //     const pdfBuffer = await page.pdf({ format: "A4" });
 
-        res.setHeader("Content-Type", "application/pdf");
-        res.setHeader(
-          "Content-Disposition",
-          `attachment; filename="{factura_${invoice.id}.pdf"`
-        );
-        res.send(pdfBuffer);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    })();
+    //     // Close the browser
+    //     await browser.close();
+
+    //     res.setHeader("Content-Type", "application/pdf");
+    //     res.setHeader(
+    //       "Content-Disposition",
+    //       `attachment; filename="{factura_${invoice.id}.pdf"`
+    //     );
+    //     res.send(pdfBuffer);
+    //   } catch (error) {
+    //     console.error("Error:", error);
+    //   }
+    // })();
   });
 });
 
