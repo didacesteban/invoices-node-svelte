@@ -102,7 +102,10 @@ app.post("/invoice/download", (req, res) => {
     (async () => {
       try {
         // Create a new browser instance
-        const browser = await puppeteer.launch({ headless: true });
+        const browser = await puppeteer.launch({
+          headless: false,
+          args: ["--headless"],
+        });
 
         // Create a new page
         const page = await browser.newPage();
