@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="./favicon.png" />
+		<meta name="viewport" content="width=device-width" />
+		<script type="module" src="../node_modules/html2pdf.js/dist/html2pdf.bundle.min.js"></script>
+		
+		<link href="./_app/immutable/assets/0.b48f45cb.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.d2304f63.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.e108d1fd.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.c4b3c80e.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.ac43d3dc.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.bbcc9712.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.7a2c82ca.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/2.bdc6d134.js"><title>Excel a Factura en pdf</title><!-- HEAD_svelte-1jxw4kt_START --><meta name="description" content="Excel a Factura en pdf"><!-- HEAD_svelte-1jxw4kt_END -->
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">  <div class="app"> <div class="p-4 flex flex-col justify-center min-h-screen max-w-3xl mx-auto"><div class="flex flex-col w-full p-6 bg-sky-100 rounded"><div class="flex items-center justify-center font-black m-3 mb-12" data-svelte-h="svelte-1mxdr3y"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mr-3 text-red-600 animate-pulse" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg> <h1 class="tracking-wide text-3xl text-gray-900">Excel a PDF</h1></div> <label class="text-sm font-medium" data-svelte-h="svelte-10oynzx"><b>1.</b> Añade datos de facturación.</label> <div class="flex items-center mt-4 space-x-4"><input type="text" class="input" placeholder="Nombre y apellidos"> <input type="text" class="input" placeholder="Email"></div> <div class="flex items-center mt-4 space-x-4"><input type="text" class="input" placeholder="Dirección"></div> <div class="flex items-center mt-4 space-x-4"><input type="text" class="input" placeholder="NIF"> <input type="text" class="input" placeholder="Teléfono"></div> <label class="text-sm font-medium mt-4" data-svelte-h="svelte-1f4me7b"><b>2.</b> Abre tu excel y guarda el documento como CSV.</label> <label class="text-sm font-medium mt-4" data-svelte-h="svelte-1xjgso"><b>3.</b> Selecciona o arrastra el archivo CSV en el campo de debajo.</label> <div class="flex items-center justify-center w-full mt-4 relative"><label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"><div class="flex flex-col items-center justify-center pt-5 pb-6" data-svelte-h="svelte-yblj93"><svg class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg> <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Haz click para seleccionar</span> o
+                arrastra y suelta tu <b>CSV</b>.</p></div> <input id="dropzone-file" type="file" class="absolute w-full h-full opacity-0"></label></div>  <button type="button" class="px-4 button mt-4" data-svelte-h="svelte-af3t04">Cargar datos</button> </div></div></div> 
+			
+			<script>
+				{
+					__sveltekit_13u3j4n = {
+						base: new URL(".", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.d2304f63.js"),
+						import("./_app/immutable/entry/app.ac43d3dc.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 2],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
