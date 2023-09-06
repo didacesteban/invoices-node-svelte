@@ -6,8 +6,6 @@ import fs from "fs";
 import puppeteer from "puppeteer";
 import csvtojson from "csvtojson";
 import multer from "multer";
-import PDFDocument from "pdfkit";
-import blobStream from "blob-stream";
 
 const { urlencoded, json } = bp;
 
@@ -85,7 +83,7 @@ app.post("/invoice/download", (req, res) => {
       res.json({ data: "fail" });
     }
 
-    const htmlContent = data
+    const newInvoice = data
       .replace("{adminName}", admin.name)
       .replace("{adminNif}", admin.nif)
       .replace("{adminAdress}", admin.adress)
@@ -101,71 +99,39 @@ app.post("/invoice/download", (req, res) => {
       .replace("{irpf}", invoice.irpf)
       .replaceAll("{total}", invoice.total);
 
-    try {
-      // Create a new PDF document
-      const doc = new PDFDocument();
+    (async () => {
+      try {
+        // Create a new browser instance
+        // const browser = await puppeteer.launch({
+        //   headless: false,
+        //   args: ["--headless"],
+        // });
 
-      // Set document properties (optional)
-      doc.info.Title = "Generated PDF";
-      doc.info.Author = "Your Name";
-      doc.info.Subject = "Sample PDF";
-      doc.info.Keywords = "PDFKit, Express.js";
+        // // Create a new page
+        // const page = await browser.newPage();
 
-      // Create a buffer to store the PDF
-      const buffers = [];
-      doc.on("data", (chunk) => buffers.push(chunk));
-      doc.on("end", () => {
-        const pdfBuffer = Buffer.concat(buffers);
+        // // Define your local HTML content (replace this with your actual HTML)
+        // const localHtml = newInvoice;
 
-        // Set the appropriate response headers and send the PDF
-        res.setHeader("Content-Type", "application/pdf");
-        res.setHeader("Content-Disposition", "inline; filename=generated.pdf");
-        res.send(pdfBuffer);
-      });
+        // // Set the HTML content for the page
+        // await page.setContent(localHtml, { waitUntil: "networkidle0" });
 
-      // Write the HTML content to the PDF
-      doc.text(htmlContent);
+        // // Generate PDF from the page
+        // const pdfBuffer = await page.pdf({ format: "A4" });
 
-      // End the document to finalize the PDF
-      doc.end();
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-      res.status(500).send("Error generating PDF");
-    }
+        // // Close the browser
+        // await browser.close();
 
-    // (async () => {
-    //   try {
-    //     // Create a new browser instance
-    //     const browser = await puppeteer.launch({
-    //       headless: false,
-    //       args: ["--headless"],
-    //     });
-
-    //     // Create a new page
-    //     const page = await browser.newPage();
-
-    //     // Define your local HTML content (replace this with your actual HTML)
-    //     const localHtml = newInvoice;
-
-    //     // Set the HTML content for the page
-    //     await page.setContent(localHtml, { waitUntil: "networkidle0" });
-
-    //     // Generate PDF from the page
-    //     const pdfBuffer = await page.pdf({ format: "A4" });
-
-    //     // Close the browser
-    //     await browser.close();
-
-    //     res.setHeader("Content-Type", "application/pdf");
-    //     res.setHeader(
-    //       "Content-Disposition",
-    //       `attachment; filename="{factura_${invoice.id}.pdf"`
-    //     );
-    //     res.send(pdfBuffer);
-    //   } catch (error) {
-    //     console.error("Error:", error);
-    //   }
-    // })();
+        // res.setHeader("Content-Type", "application/pdf");
+        // res.setHeader(
+        //   "Content-Disposition",
+        //   `attachment; filename="{factura_${invoice.id}.pdf"`
+        // );
+        res.send(newInvoice);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    })();
   });
 });
 

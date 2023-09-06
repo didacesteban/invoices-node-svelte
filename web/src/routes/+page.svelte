@@ -3,8 +3,8 @@
   // @ts-ignore
   import axios from "axios";
 
-  // const api = "https://invoices-node-svelte-production.up.railway.app";
-  const api = "http://localhost:3000";
+  const api = "https://invoices-node-svelte-production.up.railway.app";
+  // const api = "http://localhost:3000";
 
   // @ts-ignore
   /**
@@ -22,25 +22,43 @@
     (data = data.filter((item) => item.id !== invoice.id));
 
   // @ts-ignore
+  const openInvoice = async function downloadPDF(invoice) {
+    try {
+      const response = await axios.post(`${api}/invoice/download`, {
+        invoice,
+        admin,
+      });
+
+      var myWindow = window.open("", "response", "resizable=yes");
+      return myWindow.document.write(response.data);
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+    }
+  };
   const downloadInvoice = async function downloadPDF(invoice) {
     try {
-      const response = await axios.post(
-        `${api}/invoice/download`,
-        { invoice, admin },
-        {
-          responseType: "arraybuffer", // To get binary data as ArrayBuffer
-        }
-      );
+      const response = await axios.post(`${api}/invoice/download`, {
+        invoice,
+        admin,
+      });
 
-      const pdfBlob = new Blob([response.data], { type: "application/pdf" });
-      const url = URL.createObjectURL(pdfBlob);
+      const options = {
+        filename: `factura_${invoice.id}.pdf`,
+        margin: 10,
+        html2canvas: { width: 1000, useCORS: true },
+      };
 
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `factura_${invoice.id}.pdf`;
-      a.click();
-
-      URL.revokeObjectURL(url);
+      const pdf = await html2pdf()
+        .from(response.data)
+        .set(options)
+        .toPdf()
+        .get("pdf");
+      let link = document.createElement("a");
+      link.target = "_blank";
+      link.href = pdf.output("bloburl");
+      link.download = `factura_${invoice.id}.pdf`;
+      link.click();
+      link.remove();
     } catch (error) {
       console.error("Error downloading PDF:", error);
     }
@@ -212,7 +230,7 @@
           <th>Nombre</th>
           <th>DNI/NIE/NIF</th>
           <th>Total</th>
-          <th class="text-center">Descargar</th>
+          <th class="text-center">Ver</th>
           <th class="text-center">Eliminar</th>
         </tr>
         {#each data as item}
@@ -225,22 +243,19 @@
               <td class="text-center"
                 ><button
                   type="button"
-                  class="button"
-                  on:click={() => downloadInvoice(item)}
-                  ><svg
+                  class="button stroke-white fill-white"
+                  on:click={() => openInvoice(item)}
+                >
+                  <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="16"
-                    fill="currentColor"
-                    class="bi bi-arrow-down-square"
-                    viewBox="0 0 16 16"
+                    viewBox="0 0 24 24"
+                    ><path
+                      d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z"
+                    /></svg
                   >
-                    <path
-                      fill-rule="evenodd"
-                      d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm8.5 2.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"
-                    />
-                  </svg></button
-                ></td
+                </button></td
               >
               <td class="text-center"
                 ><button

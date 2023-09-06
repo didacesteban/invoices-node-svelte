@@ -2,178 +2,70 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>A simple, clean, and responsive HTML invoice template</title>
-
-		<style>
-			.invoice-box {
-				max-width: 800px;
-				margin: auto;
-				padding: 30px;
-				border: 1px solid #eee;
-				box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-				font-size: 16px;
-				line-height: 24px;
-				font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-				color: #555;
-			}
-
-			.invoice-box table {
-				width: 100%;
-				line-height: inherit;
-				/* text-align: left; */
-			}
-
-			.invoice-box table td {
-				padding: 5px;
-				vertical-align: top;
-			}
-
-			.invoice-box table tr td:nth-child(2) {
-				/* text-align: right; */
-			}
-
-			.invoice-box table tr.top table td {
-				padding-bottom: 20px;
-			}
-
-			.invoice-box table tr.top table td.title {
-				font-size: 45px;
-				line-height: 45px;
-				color: #333;
-			}
-
-			.invoice-box table tr.information table td {
-				padding-bottom: 40px;
-			}
-
-			.invoice-box table tr.heading td {
-				background: #eee;
-				border-bottom: 1px solid #ddd;
-				font-weight: bold;
-			}
-
-			.invoice-box table tr.details td {
-				padding-bottom: 20px;
-			}
-
-			.invoice-box table tr.item td {
-				border-bottom: 1px solid #eee;
-			}
-
-			.invoice-box table tr.item.last td {
-				border-bottom: none;
-			}
-
-			.invoice-box table tr.total td:nth-child(2) {
-				/* border-top: 2px solid #eee; */
-				font-weight: bold;
-			}
-
-			@media only screen and (max-width: 600px) {
-				.invoice-box table tr.top table td {
-					width: 100%;
-					display: block;
-					/* text-align: center; */
-				}
-
-				.invoice-box table tr.information table td {
-					width: 100%;
-					display: block;
-					/* text-align: center; */
-				}
-			}
-
-			/** RTL **/
-			.invoice-box.rtl {
-				direction: rtl;
-				font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-			}
-
-			.watermark {
-				position: absolute;
-				display: flex;
-				width: 100%;
-				height: 100%;
-				opacity: 0.3;
-			}
-		
-		</style>
+		<title>Factura</title>
 	</head>
 
 	<body>
-		<div class="watermark">
+		<div  style="		
+		margin-top: auto;
+		padding: 30px;
+		font-size: 16px;
+		line-height: 24px;
+		font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+		"
+		>
+		<!-- <div style="position: absolute;
+		display: flex;
+		width: 100%;
+		height: 100%;
+		opacity: 0.3;">
 			<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="500.000000pt" height="500.000000pt" viewBox="0 0 500.000000 500.000000" preserveAspectRatio="xMidYMid meet"> <metadata> Created by potrace 1.16, written by Peter Selinger 2001-2019 </metadata> <g transform="translate(0.000000,500.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none"> <path d="M1315 4241 c-106 -36 -205 -139 -234 -242 -9 -34 -11 -392 -9 -1519 l3 -1475 28 -56 c33 -68 109 -141 180 -174 l52 -25 1165 0 1165 0 52 25 c71 33 147 106 180 174 l28 56 0 1250 0 1250 -29 53 c-22 38 -112 133 -319 335 -159 155 -308 294 -332 309 -95 60 -68 58 -1014 57 -792 0 -870 -2 -916 -18z m1840 -125 c38 -17 120 -91 338 -306 159 -156 296 -297 305 -314 16 -29 17 -124 17 -1236 0 -1305 3 -1233 -53 -1308 -14 -18 -46 -45 -71 -60 l-46 -27 -1145 0 -1145 0 -48 28 c-61 36 -103 94 -117 160 -7 36 -10 491 -8 1477 3 1290 5 1428 19 1461 24 52 73 104 122 128 42 21 49 21 912 21 l870 0 50 -24z"/> <path d="M2505 3490 c-76 -16 -115 -65 -115 -145 0 -105 84 -169 187 -144 44 12 103 65 103 94 0 25 -56 18 -84 -10 -44 -44 -113 -31 -136 24 -37 89 69 163 136 96 15 -15 36 -25 54 -25 35 0 36 5 10 47 -30 49 -95 76 -155 63z"/> <path d="M1840 3345 l0 -145 100 0 100 0 0 30 0 30 -65 0 -65 0 0 30 c0 30 1 30 55 30 52 0 55 1 55 25 0 24 -3 25 -55 25 -54 0 -55 0 -55 30 0 29 1 29 63 32 59 3 62 4 62 28 0 25 -1 25 -97 28 l-98 3 0 -146z"/> <path d="M2086 3478 c4 -7 25 -39 47 -71 l39 -59 -46 -69 c-25 -38 -46 -71 -46 -74 0 -3 16 -5 35 -5 29 0 38 6 65 45 17 25 33 45 35 45 2 0 18 -20 35 -45 27 -39 36 -45 65 -45 19 0 35 2 35 5 0 3 -21 36 -46 74 l-46 69 39 59 c60 88 59 83 16 83 -34 0 -41 -5 -66 -45 -16 -25 -30 -45 -32 -45 -2 0 -16 20 -32 45 -25 40 -32 45 -66 45 -28 0 -36 -3 -31 -12z"/> <path d="M2730 3345 l0 -145 100 0 100 0 0 30 0 30 -65 0 -65 0 0 30 c0 30 1 30 55 30 52 0 55 1 55 25 0 24 -3 25 -55 25 -54 0 -55 0 -55 30 0 29 1 29 63 32 59 3 62 4 62 28 0 25 -1 25 -97 28 l-98 3 0 -146z"/> <path d="M2980 3345 l0 -145 100 0 100 0 0 30 0 30 -65 0 -65 0 0 115 0 115 -35 0 -35 0 0 -145z"/> <path d="M2084 2926 c-69 -32 -118 -78 -148 -138 -22 -43 -26 -66 -26 -132 1 -93 21 -155 84 -250 107 -160 440 -461 486 -440 44 21 237 184 318 269 242 253 295 460 156 614 -61 67 -132 101 -217 101 -94 0 -150 -23 -217 -90 l-57 -57 -19 29 c-23 36 -98 91 -143 107 -59 19 -160 14 -217 -13z m207 -31 c66 -23 114 -68 148 -138 l30 -62 19 46 c43 100 122 158 227 167 118 9 227 -68 261 -184 37 -128 -25 -265 -213 -464 -69 -74 -276 -250 -294 -250 -15 0 -190 144 -271 223 -256 252 -316 459 -173 602 69 69 171 92 266 60z"/> <path d="M1920 1516 l0 -266 45 0 45 0 0 105 0 105 68 0 c112 0 172 55 172 158 0 59 -15 95 -55 132 -25 23 -34 25 -151 28 l-124 4 0 -266z m187 194 c56 -20 73 -111 28 -155 -19 -20 -34 -25 -75 -25 l-50 0 0 95 0 95 34 0 c18 0 47 -5 63 -10z"/> <path d="M2320 1514 l0 -266 113 4 c104 3 117 5 154 30 110 73 138 299 51 419 -44 61 -92 79 -215 79 l-103 0 0 -266z m225 166 c29 -27 55 -105 55 -165 0 -60 -26 -138 -55 -165 -18 -17 -40 -25 -80 -28 l-55 -4 0 197 0 197 55 -4 c40 -3 62 -11 80 -28z"/> <path d="M2780 1515 l0 -265 45 0 45 0 0 115 0 115 79 0 79 0 4 35 4 35 -83 0 -83 0 0 80 0 79 103 3 102 3 3 33 3 32 -150 0 -151 0 0 -265z"/> </g> </svg>
 			<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="500.000000pt" height="500.000000pt" viewBox="0 0 500.000000 500.000000" preserveAspectRatio="xMidYMid meet"> <metadata> Created by potrace 1.16, written by Peter Selinger 2001-2019 </metadata> <g transform="translate(0.000000,500.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none"> <path d="M1315 4241 c-106 -36 -205 -139 -234 -242 -9 -34 -11 -392 -9 -1519 l3 -1475 28 -56 c33 -68 109 -141 180 -174 l52 -25 1165 0 1165 0 52 25 c71 33 147 106 180 174 l28 56 0 1250 0 1250 -29 53 c-22 38 -112 133 -319 335 -159 155 -308 294 -332 309 -95 60 -68 58 -1014 57 -792 0 -870 -2 -916 -18z m1840 -125 c38 -17 120 -91 338 -306 159 -156 296 -297 305 -314 16 -29 17 -124 17 -1236 0 -1305 3 -1233 -53 -1308 -14 -18 -46 -45 -71 -60 l-46 -27 -1145 0 -1145 0 -48 28 c-61 36 -103 94 -117 160 -7 36 -10 491 -8 1477 3 1290 5 1428 19 1461 24 52 73 104 122 128 42 21 49 21 912 21 l870 0 50 -24z"/> <path d="M2505 3490 c-76 -16 -115 -65 -115 -145 0 -105 84 -169 187 -144 44 12 103 65 103 94 0 25 -56 18 -84 -10 -44 -44 -113 -31 -136 24 -37 89 69 163 136 96 15 -15 36 -25 54 -25 35 0 36 5 10 47 -30 49 -95 76 -155 63z"/> <path d="M1840 3345 l0 -145 100 0 100 0 0 30 0 30 -65 0 -65 0 0 30 c0 30 1 30 55 30 52 0 55 1 55 25 0 24 -3 25 -55 25 -54 0 -55 0 -55 30 0 29 1 29 63 32 59 3 62 4 62 28 0 25 -1 25 -97 28 l-98 3 0 -146z"/> <path d="M2086 3478 c4 -7 25 -39 47 -71 l39 -59 -46 -69 c-25 -38 -46 -71 -46 -74 0 -3 16 -5 35 -5 29 0 38 6 65 45 17 25 33 45 35 45 2 0 18 -20 35 -45 27 -39 36 -45 65 -45 19 0 35 2 35 5 0 3 -21 36 -46 74 l-46 69 39 59 c60 88 59 83 16 83 -34 0 -41 -5 -66 -45 -16 -25 -30 -45 -32 -45 -2 0 -16 20 -32 45 -25 40 -32 45 -66 45 -28 0 -36 -3 -31 -12z"/> <path d="M2730 3345 l0 -145 100 0 100 0 0 30 0 30 -65 0 -65 0 0 30 c0 30 1 30 55 30 52 0 55 1 55 25 0 24 -3 25 -55 25 -54 0 -55 0 -55 30 0 29 1 29 63 32 59 3 62 4 62 28 0 25 -1 25 -97 28 l-98 3 0 -146z"/> <path d="M2980 3345 l0 -145 100 0 100 0 0 30 0 30 -65 0 -65 0 0 115 0 115 -35 0 -35 0 0 -145z"/> <path d="M2084 2926 c-69 -32 -118 -78 -148 -138 -22 -43 -26 -66 -26 -132 1 -93 21 -155 84 -250 107 -160 440 -461 486 -440 44 21 237 184 318 269 242 253 295 460 156 614 -61 67 -132 101 -217 101 -94 0 -150 -23 -217 -90 l-57 -57 -19 29 c-23 36 -98 91 -143 107 -59 19 -160 14 -217 -13z m207 -31 c66 -23 114 -68 148 -138 l30 -62 19 46 c43 100 122 158 227 167 118 9 227 -68 261 -184 37 -128 -25 -265 -213 -464 -69 -74 -276 -250 -294 -250 -15 0 -190 144 -271 223 -256 252 -316 459 -173 602 69 69 171 92 266 60z"/> <path d="M1920 1516 l0 -266 45 0 45 0 0 105 0 105 68 0 c112 0 172 55 172 158 0 59 -15 95 -55 132 -25 23 -34 25 -151 28 l-124 4 0 -266z m187 194 c56 -20 73 -111 28 -155 -19 -20 -34 -25 -75 -25 l-50 0 0 95 0 95 34 0 c18 0 47 -5 63 -10z"/> <path d="M2320 1514 l0 -266 113 4 c104 3 117 5 154 30 110 73 138 299 51 419 -44 61 -92 79 -215 79 l-103 0 0 -266z m225 166 c29 -27 55 -105 55 -165 0 -60 -26 -138 -55 -165 -18 -17 -40 -25 -80 -28 l-55 -4 0 197 0 197 55 -4 c40 -3 62 -11 80 -28z"/> <path d="M2780 1515 l0 -265 45 0 45 0 0 115 0 115 79 0 79 0 4 35 4 35 -83 0 -83 0 0 80 0 79 103 3 102 3 3 33 3 32 -150 0 -151 0 0 -265z"/> </g> </svg>
-			
-		</div>
-		<div class="invoice-box">
-			<table cellpadding="0" cellspacing="0">
-				<tr class="top">
-					<td colspan="6">
-						<table>
-							<tr>
-								<td class="title">
-									<!-- <img src="https://www.sparksuite.com/images/logo.png" style="width: 100%; max-width: 300px" /> -->
-								</td>
-
-								<td style="text-align: right">
-									Factura #: <b>{id}</b><br />
-									Fecha: <b>{date}</b><br />
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-
-				<tr class="information">
-					<td colspan="6">
-						<table>
-							<tr>
-								<td>
-									{adminName}<br />
-									{adminNif}<br />
-									{adminAdress}<br />
-									{adminPhone}<br />
-									{adminEmail}
-								</td>
-
-								<td style="text-align: right">
-									<b>{name}</b><br />
-									{dni}
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-
-				<tr class="heading">
-					<td>Cantidad</td>
-					<td>Descripción</td>
-					<td>Precio unitario</td>
-					<td>IVA (21%)</td>
-					<td>IRPF</td>
-					<td style="text-align: right">Importe</td>
-				</tr>
-
-				<tr class="item">
-					<td>1</td>
-					<td>{description}</td>
-					<td>{base}</td>
-					<td>{iva}</td>
-					<td>{irpf}</td>
-					<td style="text-align: right">{total}</td>
-				</tr>
-
-
-				<tr class="total">
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td style="text-align: right">Total: <b>{total}</b></td>
-				</tr>
-			</table>
+		</div> -->
+			<div style="background-color: #e0f2fe; padding: 10px;">
+				Factura #: <b>{id}</b><br />
+				Fecha: <b>{date}</b><br />
+			</div>
+			<div style="display: flex; justify-content: space-between; padding-top: 30px; padding: 10px">
+				<div>
+					{adminName}<br />
+					{adminNif}<br />
+					{adminAdress}<br />
+					{adminPhone}<br />
+					{adminEmail}
+				</div>
+				<div>
+					<b>{name}</b><br />
+					{dni}
+				</div>
+			</div>
+			<div style="display: flex; justify-content: space-between; background-color: #e0f2fe;">
+				<div style="flex-grow: 1;">
+					<div style="background-color: #0ea5e9;  padding: 10px; color: white">Cantidad</div>
+					<div style="padding: 10px;">1</div>
+				</div>
+				<div style="flex-grow: 1;">
+					<div style="background-color: #0ea5e9;  padding: 10px; color: white">Descripción</div>
+					<div style="padding: 10px;">{description}</div>
+				</div>
+				<div style="flex-grow: 1;">
+					<div style="background-color: #0ea5e9;  padding: 10px; color: white">Precio unitario</div>
+					<div style="padding: 10px;">{base}</div>
+				</div>
+				<div style="flex-grow: 1;">
+					<div style="background-color: #0ea5e9;  padding: 10px; color: white">IVA (21%)</div>
+					<div style="padding: 10px;">{iva}</div>
+				</div>
+				<div style="flex-grow: 1;">
+					<div style="background-color: #0ea5e9;  padding: 10px; color: white">IRPF</div>
+					<div style="padding: 10px;">{irpf}</div>
+				</div>
+				<div style="flex-grow: 1; text-align: right">
+					<div style="background-color: #0ea5e9;  padding: 10px; color: white">Importe</div>
+					<div style="padding: 10px; border-left: 3px solid #0ea5e9">{total}</div>
+					<div style="padding: 10px; background-color: #0ea5e9; color: white">Total: <b>{total}</b></div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
