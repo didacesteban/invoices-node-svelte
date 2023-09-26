@@ -110,7 +110,7 @@
     </div>
     {#if !data.length}
       <label class="text-sm font-medium"
-        ><b>1.</b> Añade datos de facturación.</label
+        ><b>1.</b> Añade tus datos de facturación.</label
       >
       <div class="flex items-center mt-4 space-x-4">
         <input
@@ -123,7 +123,7 @@
         <input
           type="text"
           class="input"
-          placeholder="Email"
+          placeholder="E-mail"
           on:change={(event) =>
             (admin = { ...admin, email: event.target.value })}
         />
@@ -133,7 +133,7 @@
         <input
           type="text"
           class="input"
-          placeholder="Dirección"
+          placeholder="Dirección fiscal"
           on:change={(event) =>
             (admin = { ...admin, adress: event.target.value })}
         />
@@ -143,7 +143,7 @@
         <input
           type="text"
           class="input"
-          placeholder="NIF"
+          placeholder="NIF / CIF"
           on:change={(event) => (admin = { ...admin, nif: event.target.value })}
         />
         <input
@@ -156,7 +156,7 @@
       </div>
 
       <label class="text-sm font-medium mt-4"
-        ><b>2.</b> Abre tu excel y guarda el documento como CSV.</label
+        ><b>2.</b> Después de completar tu excel, guarda la página en formato CSV.</label
       >
       <label class="text-sm font-medium mt-4"
         ><b>3.</b> Selecciona o arrastra el archivo CSV en el campo de debajo.</label
