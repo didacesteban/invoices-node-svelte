@@ -3,8 +3,8 @@
   // @ts-ignore
   import axios from "axios";
 
-  // const api = "https://invoices-node-svelte-production.up.railway.app";
-  const api = "http://localhost:3000";
+  const api = "https://invoices-node-svelte-production.up.railway.app";
+  // const api = "http://localhost:3000";
 
   // @ts-ignore
   /**
